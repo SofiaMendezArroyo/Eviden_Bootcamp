@@ -1,0 +1,840 @@
+openapi: 3.0.0
+info:
+  title: Project Management API
+  version: 1.0.0
+  description: API for managing projects, code, users, blogs, and related entities
+
+paths:
+  # Projects endpoints
+  /projects:
+    get:
+      summary: Get all projects
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+    post:
+      summary: Create a new project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectInput'
+      responses:
+        '201':
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+
+  /projects/{id}:
+    get:
+      summary: Get a project by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    put:
+      summary: Update a project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectInput'
+      responses:
+        '200':
+          description: Project updated
+    delete:
+      summary: Delete a project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Project deleted
+
+  # Code endpoints
+  /projects/{projectId}/code:
+    get:
+      summary: Get all code files for a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of code files
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Code'
+    post:
+      summary: Add a code file to a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodeInput'
+      responses:
+        '201':
+          description: Code file added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Code'
+
+  /code/{id}:
+    get:
+      summary: Get a code file by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Code file details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Code'
+    put:
+      summary: Update a code file
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodeInput'
+      responses:
+        '200':
+          description: Code file updated
+    delete:
+      summary: Delete a code file
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Code file deleted
+
+  # Users endpoints
+  /users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{id}:
+    get:
+      summary: Get a user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      summary: Update a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: User updated
+    delete:
+      summary: Delete a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User deleted
+
+  /users/{userId}/phones:
+    get:
+      summary: Get all phones for a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of phones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Phone'
+    post:
+      summary: Add a phone to a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhoneInput'
+      responses:
+        '201':
+          description: Phone added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone'
+
+  # Blogs endpoints
+  /blogs:
+    get:
+      summary: Get all blogs
+      responses:
+        '200':
+          description: List of blogs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Blog'
+    post:
+      summary: Create a new blog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogInput'
+      responses:
+        '201':
+          description: Blog created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blog'
+
+  /blogs/{id}:
+    get:
+      summary: Get a blog by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Blog details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blog'
+    put:
+      summary: Update a blog
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogInput'
+      responses:
+        '200':
+          description: Blog updated
+    delete:
+      summary: Delete a blog
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Blog deleted
+
+  /blogs/{blogId}/articles:
+    get:
+      summary: Get all articles for a blog
+      parameters:
+        - name: blogId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+    post:
+      summary: Add an article to a blog
+      parameters:
+        - name: blogId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticleInput'
+      responses:
+        '201':
+          description: Article added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+
+  /articles/{id}:
+    get:
+      summary: Get an article by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Article details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+    put:
+      summary: Update an article
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticleInput'
+      responses:
+        '200':
+          description: Article updated
+    delete:
+      summary: Delete an article
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Article deleted
+
+  # Tags endpoints
+  /tags:
+    get:
+      summary: Get all tags
+      responses:
+        '200':
+          description: List of tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+    post:
+      summary: Create a new tag
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagInput'
+      responses:
+        '201':
+          description: Tag created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+
+  /tags/{id}:
+    get:
+      summary: Get a tag by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tag details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+    put:
+      summary: Update a tag
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagInput'
+      responses:
+        '200':
+          description: Tag updated
+    delete:
+      summary: Delete a tag
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Tag deleted
+
+  # Details endpoints
+  /projects/{projectId}/details:
+    get:
+      summary: Get all details for a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Detail'
+    post:
+      summary: Add a detail to a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DetailInput'
+      responses:
+        '201':
+          description: Detail added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Detail'
+
+  /details/{id}:
+    get:
+      summary: Get a detail by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detail details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Detail'
+    put:
+      summary: Update a detail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DetailInput'
+      responses:
+        '200':
+          description: Detail updated
+    delete:
+      summary: Delete a detail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Detail deleted
+
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        language:
+          type: string
+        open:
+          type: boolean
+      required:
+        - id
+        - description
+        - language
+        - open
+
+    ProjectInput:
+      type: object
+      properties:
+        description:
+          type: string
+        language:
+          type: string
+        open:
+          type: boolean
+      required:
+        - description
+        - language
+        - open
+
+    Code:
+      type: object
+      properties:
+        id:
+          type: string
+        package:
+          type: string
+        file:
+          type: string
+        projectId:
+          type: string
+      required:
+        - id
+        - package
+        - file
+
+    CodeInput:
+      type: object
+      properties:
+        package:
+          type: string
+        file:
+          type: string
+        projectId:
+          type: string
+      required:
+        - package
+        - file
+        - projectId
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        nick:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - nick
+        - name
+
+    UserInput:
+      type: object
+      properties:
+        nick:
+          type: string
+        name:
+          type: string
+      required:
+        - nick
+        - name
+
+    Phone:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+        userId:
+          type: string
+      required:
+        - value
+        - type
+
+    PhoneInput:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+      required:
+        - value
+        - type
+
+    Blog:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        date:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - date
+
+    BlogInput:
+      type: object
+      properties:
+        title:
+          type: string
+        date:
+          type: string
+          format: date-time
+      required:
+        - title
+        - date
+
+    Article:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        substract:
+          type: string
+        content:
+          type: string
+        blogId:
+          type: string
+      required:
+        - id
+        - title
+        - content
+
+    ArticleInput:
+      type: object
+      properties:
+        title:
+          type: string
+        substract:
+          type: string
+        content:
+          type: string
+        blogId:
+          type: string
+      required:
+        - title
+        - content
+        - blogId
+
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        date:
+          type: string
+          format: date-time
+      required:
+        - id
+        - label
+        - date
+
+    TagInput:
+      type: object
+      properties:
+        label:
+          type: string
+        date:
+          type: string
+          format: date-time
+      required:
+        - label
+        - date
+
+    Detail:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+          format: date-time
+        content:
+          type: string
+        type:
+          type: string
+        budget:
+          type: number
+        projectId:
+          type: string
+      required:
+        - date
+        - content
+        - type
+
+    DetailInput:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        content:
+          type: string
+        type:
+          type: string
+        budget:
+          type: number
+        projectId:
+          type: string
+      required:
+        - date
+        - content
+        - type
+        - projectId
